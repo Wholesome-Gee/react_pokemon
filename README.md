@@ -175,3 +175,22 @@ export default function Component () {
     )
   }
   ```
+  ---
+## useDebounce Custom Hooks 만들기
+### useEffect의 return과 의존성 배열을 활용해 useDebounce 기능 만들기
+- useDebounce기능은 user가 input에 무언가를 입력시,   
+  실시간으로 데이터를 받아와서 뷰포트에 출력해준다고 했을때,  
+  데이터 요청에 간격을 설정해주는것.
+  ex) user가 input에 'pikachu'를 검색시 ,   
+  한글자 한글자 마다 onchange 이벤트리스너가 작동되어 서버에 데이터요청을 하는것이 아닌,  
+  타이핑 시 0.5초마다 완성된 타이핑으로 데이터요청을 하는것.
+- useDebounce.jsx를 만들어 구현하는데 자세한 내용은 해당영상 참조
+---
+## AutoComplete 컴포넌트 생성하기
+### tailwind-scrollbar
+- scroll box에 있는 scrollbar를 보이지 않도록 처리할 수 있다.
+- `npm i -D tailwind-scrollbar`
+- index.css에 `@plugin 'tailwind-scrollbar'` 추가
+- scroll box 요소의 className에 `scrollbar-none` 추가
+- 참조링크 : https://www.npmjs.com/package/tailwind-scrollbar
+---
