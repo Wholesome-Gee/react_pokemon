@@ -1,4 +1,4 @@
-# Ch01. 메인 페이지 생성하기
+# Ch01. 메인 페이지 생성하기 🔥
 ## 02. Vite를 이용한 리액트 생성
 ### CLI 로 Vite를 통해 리액트 프로젝트 생성
 - `npm init vite`
@@ -176,7 +176,7 @@ export default function Component () {
   }
   ```
   ---
-## useDebounce Custom Hooks 만들기
+## 14. useDebounce Custom Hooks 만들기
 ### useEffect의 return과 의존성 배열을 활용해 useDebounce 기능 만들기
 - useDebounce기능은 user가 input에 무언가를 입력시,   
   실시간으로 데이터를 받아와서 뷰포트에 출력해준다고 했을때,  
@@ -186,7 +186,7 @@ export default function Component () {
   타이핑 시 0.5초마다 완성된 타이핑으로 데이터요청을 하는것.
 - useDebounce.jsx를 만들어 구현하는데 자세한 내용은 해당영상 참조
 ---
-## AutoComplete 컴포넌트 생성하기
+## 15. AutoComplete 컴포넌트 생성하기
 ### tailwind-scrollbar
 - scroll box에 있는 scrollbar를 보이지 않도록 처리할 수 있다.
 - `npm i -D tailwind-scrollbar`
@@ -194,3 +194,104 @@ export default function Component () {
 - scroll box 요소의 className에 `scrollbar-none` 추가
 - 참조링크 : https://www.npmjs.com/package/tailwind-scrollbar
 ---
+
+# Ch02. 상세 페이지 생성하기 🔥
+## 01. React Router DOM
+### React Router DOM 이란?
+- React Router DOM은 웹 앱에서 동적 라우팅을 구현할 수 있도록 도와주는 라이브러리
+### React Router DOM 설치하기
+- `npm i react-router-dom`
+- index.jsx 파일의 `<App/>`컴포넌트를 `<BrowserRouter>`로 감싸준다.
+  - `<BrowserRouter>`는 HTML5 History API를 사용하여 컴포넌트를 URL과 동기화된 상태로 유지해준다.
+- App 컴포넌트 내부에 `<Routes/>` `<Route/>` `<Link/>`로 정의한다
+  - Routes는 Route의 container
+  - Route는 path='url/component'   'element=Component' 두 가지 속성을 취한다.
+  - Link는 \<a/>와 유사하며 `<Link to='component'/>` 이 Link는 url/component로 이동한다.
+---
+## 02. React Router DOM APIs
+### Nested Routes (중첩 라우팅)
+```js
+// <App/>에는 보통 header, footer등의 내용
+// index 속성이 있으면 '/' 경로로 접근 시 index 속성이 있는 페이지가 같이 노출됨
+// path:'teamId'는 url/teams/id 로 접근시 <Team/> 컴포넌트를 노출
+// path:'new'는 url/teams/new 로 접근시 <NewTeamForm/> 컴포넌트를 노출
+<BrowserRouter>
+  <Routes>
+    <Route path='/' element={<App/>}>  
+      <Route index element={<Home/>}/>
+      <Route path="teams" element={<Teams/>}>
+        <Route path=":teamId" element={<Team/>}/>
+        <Route path="new" element={<NewTeamForm/>}/>
+        <Routes index element={<LeagueStandings/>}/>
+      <Route/>
+    <Route/>
+  </Routes>
+</BrowserRouter>
+```
+### Outlet
+- 컴포넌트에 nested된 컴포넌트를 표시할 위치를 지정해주는 방법
+  ```js
+  function App() {
+    return(
+      <div>
+        <h1>Welcom to the app!</h1>
+        <nav>
+          <Link to='/'>Home</Link>
+          <Link to='teams'>Teams</Link>
+        </nav>
+        <div className='content'>
+          // 이 부분에 App 컴포넌트에 nested된 컴포넌트들이 들어감
+          <Outlet/>
+        </div>
+      </div>
+    )
+  }
+  ```
+### useNavigation
+- js로 경로를 바꿔준다. (Link는 jsx로 경로를 바꾸는법)
+```js
+import {useNavigate} from 'react-router-dom'
+function LoginForm() {
+  let navigate = useNavigate(); // useNavigate() 정의
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await submitForm(event.target); 
+    navigate('../success', { replace:true });
+  }
+
+  return <form onSubmit={handleSubmit>???</form>}
+}
+```
+### useParams
+- :teamId를 path속성에 사용하였다면 useParams()로 teamId 값을 읽을 수 있다.
+  - `let params = useParams()`
+### useLocation
+- 현재 위치에 대한 object를 반환, 현재 위치가 변경될 때마다 일부 side Effect를 수행하려는 경우에 유용하다.
+  ```js
+  function App() {
+    let location = useLocation();
+    useEffect(()=>{
+      console.log(location);
+      
+    },[location])
+  }
+  ```
+### useRoutes
+- js로 Route를 생성한다. (\<Route>는 jsx로 Route를 생성하는 법)
+  ```js
+  function App() {
+    let element = useRoutes([
+      {
+        path: 'component',
+        element: <Component/>,
+        children: [
+          {
+            path: 'nested',
+            element: <Nested/>
+          }
+        ]
+      }
+    ])
+    return element;
+  }
+  ```
