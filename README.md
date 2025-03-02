@@ -295,3 +295,20 @@ function LoginForm() {
     return element;
   }
   ```
+---
+##
+### string.replaceAll('hello','hi')
+- replaceAll 메서드는 첫번째 인수를 두번째 인수로 교체해준다.
+- 정규시글 사용하려면 `string.replace(/hello/g,'hi') 이런식으로 작성한다.
+### Promise.all([])
+- Promise.all은 여러개의 작업(ex.데이터요청)을 동시에 진행하고 싶을 때 사용하며, 모든 작업이 끝나면 결과를 한번에 받아 볼 수 있다.
+- 여러개의 Promise를 배열에 넣어 Promise.all()의 파라미터로 전달한다.
+- 파라미터로 전달된 여러개의 Promise들이 모두 실행 완료되면 
+```js
+const delivery1 = () => Promise.resolve('피자배달') // Promise.resolve()는 파라미터를 Promise로 반환
+const delivery2 = () => Promise.resolve('치킨배달')
+const delivery3 = () => Promise.resolve('김밥배달')
+Promise.all([delivery1, delivery2, delivery3]).then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
+// [()=>Promise.resolve('피자배달'), ()=>Promise.resolve('치킨배달'), ()=>Promise.resolve('김밥배달') ]
+```
+---
