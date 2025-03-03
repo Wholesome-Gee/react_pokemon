@@ -296,7 +296,7 @@ function LoginForm() {
   }
   ```
 ---
-##
+## 05. 포켓몬 데이터 가공하기
 ### string.replaceAll('hello','hi')
 - replaceAll 메서드는 첫번째 인수를 두번째 인수로 교체해준다.
 - 정규시글 사용하려면 `string.replace(/hello/g,'hi') 이런식으로 작성한다.
@@ -312,3 +312,45 @@ Promise.all([delivery1, delivery2, delivery3]).then((res)=>{console.log(res)}).c
 // [()=>Promise.resolve('피자배달'), ()=>Promise.resolve('치킨배달'), ()=>Promise.resolve('김밥배달') ]
 ```
 ---
+## 08. BaseStat 컴포넌트 생성하기
+### tailwindcss로 미디어쿼리 구현하기
+- `<div className='sm:w-1/2'></div>`
+- sm: 은 뷰포트너비가 sm사이즈 이상일때 를 의미한다.
+---
+## 09. useRef를 이용해서 변수 관리하기
+### useRef()
+- 변수관리로 사용한다. (렌더링 횟수를 count할 때 사용하면 좋다.)
+  ```js
+  const ref = useRef('안녕'); // { current: '안녕' }
+  console.log(ref.current); // '안녕'
+  ```
+  - useState()는 state가 변하면 컴포넌트가 재렌더링 되고, 변경된 state로 유지된다.
+  - useRef()는 값이 변하면 컴포넌트가 재렌더링 되지않고, 값만 변경되며, 변경된 값은 다음 렌더링때 반영된다.
+  - let, const는 값이 변하면 컴포넌트가 재렌더링 되지않고, 값만 변경되며, 변경된 값은 다음 렌더링때 초기화 된다.
+    
+- 특정 html 요소를 선택할때 사용한다.
+---
+## 10. Forward Ref에 대하여
+- useRef()를 자식컴포넌트에 prop으로 전달하고 싶을 때 사용한다.
+- Forward Ref는 props와 ref를 파라미터로 받는다.
+  ```js
+  // App.jsx
+  function App() {
+    const inputRef = useRef();
+    return (
+      <div>
+        <ChildComponent ref={inputRef}/>
+      </div>
+    )
+  }
+
+  // ChildComponent.jsx
+  function ChildComponent(props,ref) {
+    return (
+      <input ref={ref}/>
+    )
+  }
+  export default forwardRef(ChildComponent)
+  ```
+  - ref는 예약어라서 ref라는 이름으로 prop전달을 못하기 때문에 forwardRef를 쓰는것인데,  
+    그냥 ref 대신 다른 이름으로 prop을 전달하듯 사용할 수 있다.
